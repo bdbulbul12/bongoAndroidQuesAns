@@ -1,0 +1,141 @@
+Explain the design pattern used in following:
+interface Vehicle {
+int set_num_of_wheels()
+int set_num_of_passengers()
+boolean has_gas()
+}
+
+a) Explain how can you use the pattern to create car and plane class?
+
+Answer:
+
+Here, the design pattern is factory design pattern.If I want to create
+a Car and a Plan class, I will keep the Vehicle  class as a parent class
+The main point of factory design is , desifined a class type then the 
+number of subclass which implement the contarct by the parent class,
+So subclass are Car and Plan class.
+
+Example: 
+
+Class Car implemnts Vehicle{
+	public int set_num_of_wheels(){
+		return 4;
+		}
+	}
+	public int set_num_of_passengers(){
+		return 5;
+		}
+	}
+	
+	public boolean has_gas(){
+		return true;
+		}
+	}
+}
+Class Plane implements Vehicle{
+	public int set_num_of_wheels(){
+		return 3;
+		}
+	}
+	public int set_num_of_passengers(){
+		return 150;
+		}
+	}
+	
+	public boolean has_gas(){
+		return false;
+		}
+	}
+}
+
+
+b) Use a different design pattern for this solution.
+I will be going to use Decorator design pattern for this solution.
+
+Decorator design pattern is used to modify the functionality of an object at runtime. At the same 
+time other instances of the same class will not be affected by this, so individual object gets the 
+modified behavior. Decorator design pattern is one of the structural design pattern (such as Adapter 
+Pattern, Bridge Pattern, Composite Pattern) and uses abstract classes or interface with composition 
+to implement.
+
+This is our interface that we are going to solve with Decorator design pattern
+
+	interface Vehicle {
+		int set_num_of_wheels()
+		int set_num_of_passengers()
+		boolean has_gas()
+	}
+	
+	public class BaseVehicle implements Vehicle {
+
+	protected Vehicle vehicle;
+	
+	public BaseVehicle(Vehicle c){
+		this.vehicle=c;
+	}
+	
+	@Override
+	public int set_num_of_wheels() {
+		this.vehicle.set_num_of_wheels();
+	}
+	@Override
+	public int set_num_of_passengers() {
+		this.vehicle.set_num_of_passengers();
+	}
+	
+	@Override
+	public boolean has_gas() {
+		this.vehicle.has_gas();
+	}
+}
+
+ Now Extending the base decorator functionality and modifying the component behavior accordingly.
+ We can have concrete decorator classes as Car and Plane
+ 
+ public class Car extends BaseVehicle {
+	public Car(Car c) {
+		super(c);
+	}
+
+	@Override
+	public int set_num_of_wheels(){
+		super.set_num_of_wheels();
+		return 4;
+	}
+	
+	@Override
+	public int set_num_of_passengers(){
+		super.set_num_of_passengers();
+		return 5;
+	}
+	
+	@Override
+	public boolean has_gas(){
+		super.has_gas();
+		return true;
+	}
+}
+
+public class Plane extends BaseVehicle {
+	public Plane(Plane p) {
+		super(p);
+	}
+
+	@Override
+	public int set_num_of_wheels(){
+		super.set_num_of_wheels();
+		return 3;
+	}
+	
+	@Override
+	public int set_num_of_passengers(){
+		super.set_num_of_passengers();
+		return 150;
+	}
+	
+	@Override
+	public boolean has_gas(){
+		super.has_gas();
+		return false;
+	}
+}
